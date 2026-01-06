@@ -255,6 +255,85 @@
             color: var(--bg-color);
         }
 
+        /* Stars Container */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Individual Stars */
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out, move 20s infinite linear;
+        }
+
+        .star.small {
+            width: 1px;
+            height: 1px;
+        }
+
+        .star.medium {
+            width: 2px;
+            height: 2px;
+        }
+
+        .star.large {
+            width: 3px;
+            height: 3px;
+        }
+
+        /* --- REALISTIC COMET CSS --- */
+        
+        /* The glowing head of the comet */
+        .comet-head {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fff 0%, #fff 40%, rgba(255,255,255,0) 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.9);
+            z-index: 2;
+            pointer-events: none;
+            will-change: transform, left, top;
+        }
+
+        /* The particles that make up the tail */
+        .comet-particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: fadeParticle 2s linear forwards;
+        }
+
+        @keyframes fadeParticle {
+            0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+        }
+
+        /* --- END REALISTIC COMET CSS --- */
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes move {
+            0% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-10px) translateX(5px); }
+            50% { transform: translateY(-5px) translateX(-5px); }
+            75% { transform: translateY(5px) translateX(10px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
         @media (max-width: 600px) {
             h1 { font-size: 1.4rem; }
             h2 { font-size: 1.2rem; }
@@ -333,6 +412,7 @@
         <li><span class="text-bright">theme [name]</span> - Switch Theme (classic, ubuntu, amber, dracula)</li>
         <li><span class="text-bright">toggletheme</span> - Cycle through themes</li>
         <li><span class="text-bright">clear</span> - Clear Terminal</li>
+        <li><span class="text-bright">stars</span> - Toggle background stars & comets</li>
     </ul>
 </div>`,
             
@@ -645,6 +725,22 @@
                 return;
             }
 
+            // Hidden stars command
+            if (cmd === 'stars') {
+                const body = document.body;
+                if (body.classList.contains('stars-mode')) {
+                    body.classList.remove('stars-mode');
+                    deactivateStars();
+                    printLine('Stars deactivated.', 'text-dim');
+                } else {
+                    body.classList.add('stars-mode');
+                    activateStars();
+                    printLine('Stars activated.', 'text-bright');
+                }
+                scrollToBottom();
+                return;
+            }
+
             // Standard Commands
             if (cmd === 'clear' || cmd === 'cls') {
                 outputDiv.innerHTML = '';
@@ -692,6 +788,158 @@
 
         function scrollToBottom() {
             outputDiv.scrollTop = outputDiv.scrollHeight;
+        }
+
+        // --- Realistic Star & Comet Logic ---
+
+        let starsContainer;
+        let cometInterval;
+
+        function activateStars() {
+            // Create stars container if it doesn't exist
+            if (!starsContainer) {
+                starsContainer = document.createElement('div');
+                starsContainer.className = 'stars-container';
+                document.body.appendChild(starsContainer);
+            }
+
+            // Clear any existing stars/comets
+            starsContainer.innerHTML = '';
+
+            // Generate random stars
+            const numStars = 150;
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                const size = Math.random() < 0.7 ? 'small' : Math.random() < 0.9 ? 'medium' : 'large';
+                star.className = `star ${size}`;
+
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 10 + 15) + 's';
+
+                starsContainer.appendChild(star);
+            }
+
+            // Start comet spawning (Realistic)
+            // Spawn a comet every 8-15 seconds
+            cometInterval = setInterval(() => {
+                spawnRealisticComet();
+            }, Math.random() * 7000 + 8000);
+        }
+
+        function deactivateStars() {
+            if (starsContainer) {
+                starsContainer.innerHTML = '';
+            }
+            if (cometInterval) {
+                clearInterval(cometInterval);
+                cometInterval = null;
+            }
+        }
+
+        function getCometColor() {
+            // Helper to match comet color to the current theme
+            if (document.body.classList.contains('theme-ubuntu')) return 'rgba(233, 84, 32, 0.7)'; // Orange
+            if (document.body.classList.contains('theme-amber')) return 'rgba(255, 176, 0, 0.8)'; // Amber
+            if (document.body.classList.contains('theme-dracula')) return 'rgba(189, 147, 249, 0.7)'; // Purple
+            return 'rgba(0, 255, 65, 0.6)'; // Classic Green (fallback)
+        }
+
+        function spawnRealisticComet() {
+            if (!starsContainer) return;
+
+            // 1. Create Comet Head
+            const head = document.createElement('div');
+            head.className = 'comet-head';
+            
+            // 2. Determine Starting Position (randomly Top or Left edge)
+            const startSide = Math.random();
+            let x, y, vx, vy;
+
+            if (startSide < 0.5) {
+                // Start Top (random X, Y is negative)
+                x = Math.random() * window.innerWidth;
+                y = -100;
+            } else {
+                // Start Left (X is negative, random Y)
+                x = -100;
+                y = Math.random() * (window.innerHeight * 0.6); // Top 60% of screen
+            }
+
+            // 3. Determine Velocity (Angle and Speed)
+            // Angle: generally diagonally down-right (45 degrees)
+            // We add slight randomness to the angle (-0.2 to +0.2 radians)
+            const angle = (Math.PI / 4) + (Math.random() * 0.4 - 0.2);
+            const speed = Math.random() * 8 + 12; // Speed between 12 and 20 pixels per frame
+
+            vx = Math.cos(angle) * speed;
+            vy = Math.sin(angle) * speed;
+
+            // Apply initial position
+            head.style.left = `${x}px`;
+            head.style.top = `${y}px`;
+
+            // Adjust head glow color based on theme
+            const color = getCometColor();
+            head.style.boxShadow = `0 0 15px 4px ${color}`;
+
+            starsContainer.appendChild(head);
+
+            // 4. Animation Loop variables
+            let frames = 0;
+            const particleSpawnRate = 2; // Spawn a particle every N frames
+
+            function animate() {
+                // Move Head
+                x += vx;
+                y += vy;
+                
+                head.style.left = `${x}px`;
+                head.style.top = `${y}px`;
+
+                // Create Trail Particles
+                if (frames % particleSpawnRate === 0) {
+                    const p = document.createElement('div');
+                    p.className = 'comet-particle';
+                    
+                    // Randomize particle size slightly
+                    const size = Math.random() * 3 + 1;
+                    p.style.width = `${size}px`;
+                    p.style.height = `${size}px`;
+                    
+                    // Set position (same as head currently)
+                    p.style.left = `${x}px`;
+                    p.style.top = `${y}px`;
+                    
+                    // Color
+                    p.style.backgroundColor = color;
+                    
+                    starsContainer.appendChild(p);
+
+                    // Cleanup particle after animation (2s matches CSS)
+                    setTimeout(() => {
+                        if (p.parentNode) p.parentNode.removeChild(p);
+                    }, 2000);
+                }
+
+                frames++;
+
+                // Check bounds - Remove if completely off screen (Bottom or Right)
+                const margin = 100;
+                if (x < window.innerWidth + margin && y < window.innerHeight + margin) {
+                    requestAnimationFrame(animate);
+                } else {
+                    // Remove head
+                    if (head.parentNode) head.parentNode.removeChild(head);
+                }
+            }
+
+            // Start animation
+            requestAnimationFrame(animate);
         }
     </script>
 </body>
