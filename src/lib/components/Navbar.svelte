@@ -36,7 +36,7 @@
       <a class="button-secondary !h-11 !px-4" href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
         <Linkedin size={17} /> LinkedIn
       </a>
-      <a class="button-secondary !h-11 !w-11 !px-0" href="/assets/resume.pdf" aria-label="Download resume">
+      <a class="button-secondary !h-11 !w-11 !px-0" href="/assets/resume.pdf" download="Duffy-Adams-Resume.pdf" aria-label="Download resume">
         <FileDown size={17} />
       </a>
       <a class="button-secondary !h-11 !w-11 !px-0" href="/terminal/index.html" aria-label="Open Terminal Mode">
@@ -70,7 +70,7 @@
           <a class="rounded-2xl px-4 py-3 text-sm font-semibold hover:bg-muted" href={link.href} onclick={() => (open = false)}>{link.label}</a>
         {/each}
         <a class="rounded-2xl px-4 py-3 text-sm font-semibold hover:bg-muted" href="/terminal/index.html">Terminal Mode</a>
-        <a class="rounded-2xl px-4 py-3 text-sm font-semibold hover:bg-muted" href="/assets/resume.pdf">Download Resume</a>
+        <a class="rounded-2xl px-4 py-3 text-sm font-semibold hover:bg-muted" href="/assets/resume.pdf" download="Duffy-Adams-Resume.pdf">Download Resume</a>
       </div>
     </div>
   {/if}

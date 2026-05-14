@@ -2,7 +2,7 @@
   import { Moon, Sun } from 'lucide-svelte';
   import { onMount } from 'svelte';
 
-  let isDark = $state(false);
+  let isDark = $state(typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
 
   function applyTheme(next: boolean) {
     isDark = next;

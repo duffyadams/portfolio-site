@@ -53,7 +53,7 @@
   <div class="reveal mb-10 flex flex-col justify-between gap-5 sm:mb-14 md:flex-row md:items-end" use:reveal={0}>
     <div>
       <p class="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground">Featured Work</p>
-      <h2 class="mt-3 max-w-3xl text-4xl font-black tracking-normal sm:text-6xl">Projects built for real users and real constraints.</h2>
+      <h2 class="mt-3 max-w-3xl text-4xl font-black tracking-normal sm:text-6xl">Projects I&apos;m proud of.</h2>
     </div>
     <p class="max-w-md text-base leading-7 text-muted-foreground">
       Recruiter-friendly snapshots of systems work: live data, dashboards, hardware, AI workflows, and product-quality UI.

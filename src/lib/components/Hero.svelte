@@ -41,7 +41,7 @@
   });
 </script>
 
-<section id="top" class="section-shell relative overflow-hidden pb-20 pt-32 sm:pt-40 lg:pb-28">
+<section id="top" class="section-shell relative overflow-hidden pb-20 pt-24 sm:pt-28 lg:pb-28 lg:pt-32">
   <div class="absolute left-1/2 top-28 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-sky-300/22 blur-3xl hero-orbit dark:bg-sky-500/12"></div>
 
   <div class="grid items-center gap-10 lg:grid-cols-[1.03fr_0.97fr]">
@@ -67,7 +67,7 @@
           View Projects
           <ArrowDownRight class="transition group-hover:translate-x-0.5 group-hover:translate-y-0.5" size={18} />
         </a>
-        <a class="button-secondary" href="/assets/resume.pdf">
+        <a class="button-secondary" href="/assets/resume.pdf" download="Duffy-Adams-Resume.pdf">
           <FileDown size={18} />
           Download Resume
         </a>
@@ -90,15 +90,16 @@
         onpointerleave={resetPhoneTilt}
       >
         <div
-          class="surface relative w-full max-w-[17rem] rounded-[3rem] bg-slate-100 p-2 shadow-hover transition-transform duration-200 ease-out [transform-style:preserve-3d] dark:bg-slate-950 sm:max-w-[18.75rem]"
+          class="surface iphone-shell relative w-full max-w-[17rem] rounded-[3rem] bg-slate-100 p-2 shadow-hover transition-transform duration-200 ease-out [transform-style:preserve-3d] dark:bg-slate-950 sm:max-w-[18.75rem]"
           style={`transform: ${phoneTransform};`}
         >
-          <div class="relative overflow-hidden rounded-[2.75rem] border border-slate-300/70 bg-slate-50 p-2 dark:border-white/10 dark:bg-black">
-            <div class="absolute left-1/2 top-3 z-10 h-7 w-28 -translate-x-1/2 rounded-full bg-black shadow-sm"></div>
-            <div class="absolute left-1/2 top-5 z-20 h-2 w-11 -translate-x-1/2 rounded-full bg-slate-800"></div>
-            <div class="absolute left-[calc(50%+3.15rem)] top-5 z-20 h-2 w-2 rounded-full bg-slate-700"></div>
+          <div class="iphone-screen relative overflow-hidden rounded-[2.75rem] border border-slate-300/70 bg-slate-50 p-2 dark:border-white/10 dark:bg-black">
+            <div class="absolute left-1/2 top-3.5 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black shadow-sm">
+              <div class="absolute left-1/2 top-1/2 h-1.5 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800"></div>
+              <div class="absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-slate-700"></div>
+            </div>
             <video
-              class="aspect-[9/19.5] w-full rounded-[2.3rem] object-cover object-top"
+              class="aspect-[9/19.5] w-full rounded-[2.3rem] object-cover object-[50%_8%]"
               src="/assets/iphone-capture-loop.webm"
               autoplay
               loop

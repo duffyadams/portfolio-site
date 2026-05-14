@@ -3,6 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (() => {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', stored ? stored === 'dark' : prefersDark);
+      })();
+    </script>
     <meta
       name="description"
       content="Duffy Adams is a software engineer and full-stack developer building real-time web apps, dashboards, automation, and polished user interfaces."
