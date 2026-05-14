@@ -1,0 +1,119 @@
+<script lang="ts">
+  import { ArrowDownRight, FileDown, Github, Linkedin, Mail, Terminal } from 'lucide-svelte';
+  import { onMount } from 'svelte';
+  import { reveal } from '$lib/reveal';
+
+  const baseTilt = { x: 0, y: -10, z: -2 };
+
+  let phoneTransform = $state(toPhoneTransform(baseTilt.x, baseTilt.y, baseTilt.z));
+  let reduceMotion = $state(false);
+
+  function toPhoneTransform(x: number, y: number, z: number) {
+    return `rotateX(${x.toFixed(2)}deg) rotateY(${y.toFixed(2)}deg) rotateZ(${z.toFixed(2)}deg)`;
+  }
+
+  function handlePhonePointerMove(event: PointerEvent) {
+    if (reduceMotion || event.pointerType === 'touch') return;
+
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    phoneTransform = toPhoneTransform(baseTilt.x - y * 8, baseTilt.y + x * 10, baseTilt.z + x * 1.5);
+  }
+
+  function resetPhoneTilt() {
+    phoneTransform = toPhoneTransform(baseTilt.x, baseTilt.y, baseTilt.z);
+  }
+
+  onMount(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    reduceMotion = media.matches;
+
+    const updateMotionPreference = () => {
+      reduceMotion = media.matches;
+      if (reduceMotion) resetPhoneTilt();
+    };
+
+    media.addEventListener('change', updateMotionPreference);
+
+    return () => media.removeEventListener('change', updateMotionPreference);
+  });
+</script>
+
+<section id="top" class="section-shell relative overflow-hidden pb-20 pt-32 sm:pt-40 lg:pb-28">
+  <div class="absolute left-1/2 top-28 -z-10 h-80 w-80 -translate-x-1/2 rounded-full bg-sky-300/22 blur-3xl hero-orbit dark:bg-sky-500/12"></div>
+
+  <div class="grid items-center gap-10 lg:grid-cols-[1.03fr_0.97fr]">
+    <div class="reveal" use:reveal={0}>
+      <div class="pill mb-8">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60"></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+        </span>
+        Open to Software Engineering Roles
+      </div>
+
+      <p class="mb-5 text-sm font-bold uppercase tracking-[0.22em] text-muted-foreground">Software Engineer / Full-Stack Developer</p>
+      <h1 class="max-w-4xl text-5xl font-black leading-[0.95] tracking-normal text-foreground sm:text-7xl lg:text-8xl">
+        Duffy Adams
+      </h1>
+      <p class="mt-7 max-w-2xl text-xl leading-8 text-muted-foreground sm:text-2xl sm:leading-9">
+        I build real-time web apps, data-driven dashboards, and polished user experiences.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a class="button-primary group" href="#projects">
+          View Projects
+          <ArrowDownRight class="transition group-hover:translate-x-0.5 group-hover:translate-y-0.5" size={18} />
+        </a>
+        <a class="button-secondary" href="/assets/resume.pdf">
+          <FileDown size={18} />
+          Download Resume
+        </a>
+      </div>
+
+      <div class="mt-7 flex flex-wrap gap-2">
+        <!-- Replace profile/contact links here. -->
+        <a class="button-secondary !px-4 !py-2.5" href="https://github.com/" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a>
+        <a class="button-secondary !px-4 !py-2.5" href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
+        <a class="button-secondary !px-4 !py-2.5" href="mailto:duffyadams@example.com"><Mail size={17} /> Email</a>
+        <a class="button-secondary !px-4 !py-2.5" href="/terminal/index.html"><Terminal size={17} /> Terminal Mode</a>
+      </div>
+    </div>
+
+    <div class="reveal lg:pl-6" use:reveal={140}>
+      <div
+        role="presentation"
+        class="relative mx-auto flex justify-center [perspective:1200px] float-soft"
+        onpointermove={handlePhonePointerMove}
+        onpointerleave={resetPhoneTilt}
+      >
+        <div
+          class="surface relative w-full max-w-[17rem] rounded-[3rem] bg-slate-100 p-2 shadow-hover transition-transform duration-200 ease-out [transform-style:preserve-3d] dark:bg-slate-950 sm:max-w-[18.75rem]"
+          style={`transform: ${phoneTransform};`}
+        >
+          <div class="relative overflow-hidden rounded-[2.75rem] border border-slate-300/70 bg-slate-50 p-2 dark:border-white/10 dark:bg-black">
+            <div class="absolute left-1/2 top-3 z-10 h-7 w-28 -translate-x-1/2 rounded-full bg-black shadow-sm"></div>
+            <div class="absolute left-1/2 top-5 z-20 h-2 w-11 -translate-x-1/2 rounded-full bg-slate-800"></div>
+            <div class="absolute left-[calc(50%+3.15rem)] top-5 z-20 h-2 w-2 rounded-full bg-slate-700"></div>
+            <video
+              class="aspect-[9/19.5] w-full rounded-[2.3rem] object-cover object-top"
+              src="/assets/iphone-capture-loop.webm"
+              autoplay
+              loop
+              muted
+              playsinline
+              aria-label="Mobile preview of the San Diego Traffic Watch app"
+            ></video>
+            <div class="pointer-events-none absolute inset-2 rounded-[2.3rem] ring-1 ring-inset ring-white/15"></div>
+            <div class="pointer-events-none absolute bottom-5 left-1/2 h-1 w-24 -translate-x-1/2 rounded-full bg-white/70"></div>
+          </div>
+          <div class="absolute -right-1 top-24 h-16 w-1.5 rounded-r-full bg-slate-300 dark:bg-slate-800"></div>
+          <div class="absolute -left-1 top-20 h-10 w-1.5 rounded-l-full bg-slate-300 dark:bg-slate-800"></div>
+          <div class="absolute -left-1 top-36 h-14 w-1.5 rounded-l-full bg-slate-300 dark:bg-slate-800"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

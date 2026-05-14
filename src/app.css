@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: InterVariable;
+  src: url('https://rsms.me/inter/font-files/InterVariable.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+:root {
+  color-scheme: light;
+  --background: 210 33% 99%;
+  --foreground: 220 26% 8%;
+  --muted: 214 28% 94%;
+  --muted-foreground: 220 10% 42%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 26% 8%;
+  --border: 220 22% 88%;
+  --primary: 220 26% 8%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 208 100% 48%;
+  --accent-foreground: 0 0% 100%;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: 220 22% 7%;
+  --foreground: 210 32% 96%;
+  --muted: 220 16% 14%;
+  --muted-foreground: 218 12% 70%;
+  --card: 220 18% 10%;
+  --card-foreground: 210 32% 96%;
+  --border: 220 15% 20%;
+  --primary: 210 32% 96%;
+  --primary-foreground: 220 22% 7%;
+  --accent: 204 100% 62%;
+  --accent-foreground: 220 22% 7%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top left, hsl(204 100% 92% / 0.72), transparent 34rem),
+    linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted) / 0.32));
+  color: hsl(var(--foreground));
+  font-family: InterVariable, Inter, ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  letter-spacing: 0;
+  transition:
+    background-color 420ms ease,
+    color 420ms ease;
+}
+
+.dark body {
+  background:
+    radial-gradient(circle at 18% 0%, hsl(204 100% 36% / 0.18), transparent 30rem),
+    linear-gradient(180deg, hsl(var(--background)), hsl(220 22% 5%));
+}
+
+::selection {
+  background: hsl(var(--accent) / 0.18);
+}
+
+:focus-visible {
+  outline: 3px solid hsl(var(--accent) / 0.5);
+  outline-offset: 4px;
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .surface {
+    @apply border border-border bg-card text-card-foreground shadow-soft shadow-slate-900/10 transition-all duration-300 dark:shadow-black/30;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-muted-foreground shadow-sm;
+  }
+
+  .button-base {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition duration-300 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4;
+  }
+
+  .button-primary {
+    @apply button-base bg-primary text-primary-foreground shadow-lg shadow-slate-900/15 hover:shadow-xl dark:shadow-black/30;
+  }
+
+  .button-secondary {
+    @apply button-base border border-border bg-card text-foreground hover:border-foreground/20 hover:bg-muted;
+  }
+
+  .link-quiet {
+    @apply text-muted-foreground transition-colors hover:text-foreground;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-orbit {
+  animation: orbit 9s ease-in-out infinite alternate;
+}
+
+.float-soft {
+  animation: float-soft 5.5s ease-in-out infinite;
+}
+
+@keyframes orbit {
+  from {
+    transform: translate3d(-10px, 8px, 0) rotate(-2deg);
+  }
+  to {
+    transform: translate3d(16px, -14px, 0) rotate(3deg);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
