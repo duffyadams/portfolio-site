@@ -14,7 +14,7 @@
 <section id="skills" class="section-shell py-20 sm:py-28">
   <div class="reveal mb-10" use:reveal={0}>
     <p class="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground">Technical Range</p>
-    <h2 class="mt-3 max-w-3xl text-4xl font-black tracking-normal sm:text-6xl">A full-stack toolkit with systems instincts.</h2>
+    <h2 class="mt-3 max-w-3xl text-4xl font-black tracking-normal sm:text-6xl">Tools and languages I use to ship projects</h2>
   </div>
 
   <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
