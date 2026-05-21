@@ -18,18 +18,24 @@
       tech: ['Svelte', 'Flask', 'Python', 'SQLite', 'Playwright', 'OpenAI API', 'Tailwind/CSS'],
       demoHref: '#',
       githubHref: '#',
-      preview: '/assets/web-capture-loop.webm',
+      preview: '/assets/traffic-app-web-capture-loop.webm',
       accent: 'linear-gradient(135deg, #bae6fd, #38bdf8 48%, #0f172a)'
     },
     {
-      title: 'AI Action Figure Generator',
+      title: 'FLEX',
       description:
-        'A SaaS-style web app concept that turns user-uploaded photos into custom AI-generated action figure images with login and payment flow support.',
-      highlights: ['AI image generation workflow', 'Auth flow', 'Stripe payment concept', 'Full-stack architecture'],
-      tech: ['Svelte', 'Flask', 'Python', 'Stripe', 'Supabase', 'OpenAI API'],
+        'A professional offline-first fitness tracker for building routines, logging workouts in real time, and syncing progress through a personal server.',
+      highlights: [
+        'IndexedDB local database with Dexie for fast offline access',
+        'Real-time workout logging with timer and set completion logic',
+        'Searchable exercise library with custom user additions',
+        'Node, Express, and SQLite sync server for private backups'
+      ],
+      tech: ['Svelte 5', 'Vite', 'Dexie.js', 'IndexedDB', 'Node.js', 'Express', 'SQLite3', 'PWA'],
       demoHref: '#',
       githubHref: '#',
-      accent: 'linear-gradient(135deg, #fde68a, #f472b6 52%, #312e81)'
+      preview: '/assets/flex-app-web-capture-loop.webm',
+      accent: 'linear-gradient(135deg, #dcfce7, #22c55e 50%, #111827)'
     },
     {
       title: 'Pourtocol Smart Fountain',

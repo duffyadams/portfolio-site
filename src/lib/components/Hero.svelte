@@ -1,12 +1,28 @@
 <script lang="ts">
-  import { ArrowDownRight, FileDown, Github, Linkedin, Mail, Terminal } from 'lucide-svelte';
+  import { ArrowDownRight, ChevronLeft, ChevronRight, FileDown, Github, Linkedin, Mail, Terminal } from 'lucide-svelte';
   import { onMount } from 'svelte';
   import { reveal } from '$lib/reveal';
 
   const baseTilt = { x: 0, y: -10, z: -2 };
+  const phonePreviews = [
+    {
+      title: 'San Diego Traffic Watch',
+      src: '/assets/traffic-app-iphone-capture-loop.webm',
+      label: 'Mobile preview of the San Diego Traffic Watch app'
+    },
+    {
+      title: 'FLEX',
+      src: '/assets/flex-app-iphone-capture-loop.webm',
+      label: 'Mobile preview of the FLEX fitness tracking app'
+    }
+  ] as const;
 
   let phoneTransform = $state(toPhoneTransform(baseTilt.x, baseTilt.y, baseTilt.z));
   let reduceMotion = $state(false);
+  let activePhonePreviewIndex = $state(0);
+  let swipeStartX = $state<number | null>(null);
+
+  let activePhonePreview = $derived(phonePreviews[activePhonePreviewIndex]);
 
   function toPhoneTransform(x: number, y: number, z: number) {
     return `rotateX(${x.toFixed(2)}deg) rotateY(${y.toFixed(2)}deg) rotateZ(${z.toFixed(2)}deg)`;
@@ -24,6 +40,24 @@
 
   function resetPhoneTilt() {
     phoneTransform = toPhoneTransform(baseTilt.x, baseTilt.y, baseTilt.z);
+  }
+
+  function showPhonePreview(direction: number) {
+    activePhonePreviewIndex = (activePhonePreviewIndex + direction + phonePreviews.length) % phonePreviews.length;
+  }
+
+  function handlePhonePointerDown(event: PointerEvent) {
+    swipeStartX = event.clientX;
+  }
+
+  function handlePhonePointerUp(event: PointerEvent) {
+    if (swipeStartX === null) return;
+
+    const distance = event.clientX - swipeStartX;
+    swipeStartX = null;
+
+    if (Math.abs(distance) < 42) return;
+    showPhonePreview(distance < 0 ? 1 : -1);
   }
 
   onMount(() => {
@@ -86,7 +120,10 @@
       <div
         role="presentation"
         class="relative mx-auto flex justify-center [perspective:1200px] float-soft"
+        onpointerdown={handlePhonePointerDown}
         onpointermove={handlePhonePointerMove}
+        onpointerup={handlePhonePointerUp}
+        onpointercancel={() => (swipeStartX = null)}
         onpointerleave={resetPhoneTilt}
       >
         <div
@@ -98,15 +135,56 @@
               <div class="absolute left-1/2 top-1/2 h-1.5 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800"></div>
               <div class="absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-slate-700"></div>
             </div>
-            <video
-              class="aspect-[9/19.5] w-full rounded-[2.3rem] object-cover object-[50%_8%]"
-              src="/assets/iphone-capture-loop.webm"
-              autoplay
-              loop
-              muted
-              playsinline
-              aria-label="Mobile preview of the San Diego Traffic Watch app"
-            ></video>
+            {#key activePhonePreview.src}
+              <video
+                class="aspect-[9/19.5] w-full rounded-[2.3rem] object-cover object-[50%_8%]"
+                src={activePhonePreview.src}
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                aria-label={activePhonePreview.label}
+              ></video>
+            {/key}
+            <div class="absolute inset-x-4 bottom-10 z-20 flex items-center justify-between">
+              <button
+                class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/48 text-white shadow-lg backdrop-blur transition hover:bg-black/62 focus-visible:outline-white/80"
+                type="button"
+                aria-label="Show previous app preview"
+                onclick={(event) => {
+                  event.stopPropagation();
+                  showPhonePreview(-1);
+                }}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <div class="flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1.5 backdrop-blur">
+                {#each phonePreviews as preview, index}
+                  <button
+                    class={`h-1.5 rounded-full transition ${index === activePhonePreviewIndex ? 'w-5 bg-white' : 'w-1.5 bg-white/48 hover:bg-white/75'}`}
+                    type="button"
+                    aria-label={`Show ${preview.title} preview`}
+                    aria-current={index === activePhonePreviewIndex ? 'true' : undefined}
+                    onclick={(event) => {
+                      event.stopPropagation();
+                      activePhonePreviewIndex = index;
+                    }}
+                  ></button>
+                {/each}
+              </div>
+              <button
+                class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/48 text-white shadow-lg backdrop-blur transition hover:bg-black/62 focus-visible:outline-white/80"
+                type="button"
+                aria-label="Show next app preview"
+                onclick={(event) => {
+                  event.stopPropagation();
+                  showPhonePreview(1);
+                }}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
             <div class="pointer-events-none absolute inset-2 rounded-[2.3rem] ring-1 ring-inset ring-white/15"></div>
             <div class="pointer-events-none absolute bottom-5 left-1/2 h-1 w-24 -translate-x-1/2 rounded-full bg-white/70"></div>
           </div>

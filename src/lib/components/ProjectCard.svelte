@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ExternalLink, Github } from 'lucide-svelte';
+  import { onMount } from 'svelte';
   import { reveal } from '$lib/reveal';
 
   type Project = {
@@ -15,6 +16,30 @@
 
   let { project, delay = 0 }: { project: Project; delay?: number } = $props();
   let isVideo = $derived(project.preview?.endsWith('.webm') ?? false);
+  let videoElement = $state<HTMLVideoElement>();
+  let shouldLoadVideo = $state(false);
+
+  onMount(() => {
+    if (!isVideo || !videoElement) return;
+
+    if (!('IntersectionObserver' in window)) {
+      shouldLoadVideo = true;
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        shouldLoadVideo = true;
+        observer.disconnect();
+      },
+      { rootMargin: '300px 0px' }
+    );
+
+    observer.observe(videoElement);
+
+    return () => observer.disconnect();
+  });
 </script>
 
 <article class="reveal group flex h-full flex-col overflow-hidden rounded-apple border border-border bg-card p-3 shadow-soft transition duration-300 hover:-translate-y-2 hover:shadow-hover" use:reveal={delay}>
@@ -22,12 +47,14 @@
     {#if project.preview}
       {#if isVideo}
         <video
-          src={project.preview}
+          bind:this={videoElement}
+          src={shouldLoadVideo ? project.preview : undefined}
           class="h-full min-h-56 w-full object-cover opacity-95 transition duration-500 group-hover:scale-[1.03]"
-          autoplay
+          autoplay={shouldLoadVideo}
           loop
           muted
           playsinline
+          preload="none"
           aria-label={`${project.title} preview video`}
         ></video>
       {:else}
