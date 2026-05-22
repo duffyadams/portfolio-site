@@ -11,25 +11,25 @@
   ];
 </script>
 
-<section id="skills" class="section-shell py-20 sm:py-28">
-  <div class="reveal mb-10" use:reveal={0}>
+<section id="skills" class="section-shell py-16 sm:py-20">
+  <div class="reveal mb-8" use:reveal={0}>
     <p class="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground">Technical Range</p>
     <h2 class="mt-3 max-w-3xl text-4xl font-black tracking-normal sm:text-6xl">Tools and languages I use to ship projects</h2>
   </div>
 
-  <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
     {#each groups as group, index}
-      <article class={`reveal surface rounded-apple p-7 ${group.span}`} use:reveal={index * 90}>
-        <div class="mb-8 flex items-center justify-between">
-          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-muted">
-            <svelte:component this={group.icon} size={22} />
+      <article class={`reveal surface rounded-apple p-5 sm:p-6 ${group.span}`} use:reveal={index * 90}>
+        <div class="mb-5 flex items-center justify-between">
+          <div class="grid h-10 w-10 place-items-center rounded-xl bg-muted">
+            <svelte:component this={group.icon} size={20} />
           </div>
-          <Layers3 class="text-muted-foreground/40" size={20} />
+          <Layers3 class="text-muted-foreground/35" size={18} />
         </div>
-        <h3 class="text-2xl font-black">{group.title}</h3>
-        <div class="mt-5 flex flex-wrap gap-2">
+        <h3 class="text-xl font-black sm:text-2xl">{group.title}</h3>
+        <div class="mt-4 flex flex-wrap gap-1.5">
           {#each group.skills as skill}
-            <span class="rounded-full bg-muted px-3 py-2 text-sm font-semibold text-muted-foreground">{skill}</span>
+            <span class="rounded-full bg-muted px-3 py-1.5 text-xs font-semibold text-foreground/80 sm:text-sm">{skill}</span>
           {/each}
         </div>
       </article>

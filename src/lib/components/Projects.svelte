@@ -16,8 +16,8 @@
         'Built for real-time updates and efficient reads/writes'
       ],
       tech: ['Svelte', 'Flask', 'Python', 'SQLite', 'Playwright', 'OpenAI API', 'Tailwind/CSS'],
-      demoHref: '#',
-      githubHref: '#',
+      demoHref: 'https://traffic-app.duffyadams.com/',
+      githubHref: 'https://github.com/DuffyAdams',
       preview: '/assets/traffic-app-web-capture-loop.webm',
       accent: 'linear-gradient(135deg, #bae6fd, #38bdf8 48%, #0f172a)'
     },
@@ -31,9 +31,9 @@
         'Searchable exercise library with custom user additions',
         'Node, Express, and SQLite sync server for private backups'
       ],
-      tech: ['Svelte 5', 'Vite', 'Dexie.js', 'IndexedDB', 'Node.js', 'Express', 'SQLite3', 'PWA'],
-      demoHref: '#',
-      githubHref: '#',
+      tech: ['Svelte', 'Vite', 'Dexie.js', 'IndexedDB', 'Node.js', 'Express', 'SQLite3', 'PWA'],
+      demoHref: 'https://flex.duffyadams.com/',
+      githubHref: 'https://github.com/DuffyAdams',
       preview: '/assets/flex-app-web-capture-loop.webm',
       accent: 'linear-gradient(135deg, #dcfce7, #22c55e 50%, #111827)'
     },
@@ -49,7 +49,7 @@
       ],
       tech: ['ESP32', 'C++', 'HTTP', 'JavaScript', 'Distributed Systems'],
       demoHref: '#',
-      githubHref: '#',
+      githubHref: 'https://github.com/DuffyAdams',
       accent: 'linear-gradient(135deg, #bbf7d0, #2dd4bf 48%, #083344)'
     }
   ];
@@ -63,8 +63,8 @@
     </div>
   </div>
 
-  <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-    {#each projects as project, index}
+  <div class="grid gap-5 md:grid-cols-2">
+    {#each projects.slice(0, 2) as project, index}
       <ProjectCard {project} delay={index * 110} />
     {/each}
   </div>

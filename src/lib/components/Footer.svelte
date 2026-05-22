@@ -12,10 +12,10 @@
 
       <div class="flex flex-wrap gap-2">
         <!-- Replace contact/social href values with final links. -->
-        <a class="button-secondary !px-4 !py-2.5" href="mailto:duffyadams@example.com"><Mail size={16} /> Email</a>
-        <a class="button-secondary !px-4 !py-2.5" href="https://github.com/" target="_blank" rel="noreferrer"><Github size={16} /> GitHub</a>
-        <a class="button-secondary !px-4 !py-2.5" href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><Linkedin size={16} /> LinkedIn</a>
-        <a class="button-secondary !px-4 !py-2.5" href="/assets/resume.pdf" download="Duffy-Adams-Resume.pdf"><FileDown size={16} /> Resume</a>
+        <a class="button-secondary !px-4 !py-2.5" href="mailto:duffyadams55@gmail.com"><Mail size={16} /> Email</a>
+        <a class="button-secondary !px-4 !py-2.5" href="https://github.com/DuffyAdams" target="_blank" rel="noreferrer"><Github size={16} /> GitHub</a>
+        <a class="button-secondary !px-4 !py-2.5" href="https://www.linkedin.com/in/duffyadams/" target="_blank" rel="noreferrer"><Linkedin size={16} /> LinkedIn</a>
+        <a class="button-secondary !px-4 !py-2.5" href="/assets/Resume_5_22_26.pdf" download="Duffy-Adams-Resume.pdf"><FileDown size={16} /> Resume</a>
         <a class="button-secondary !px-4 !py-2.5" href="/terminal/index.html"><Terminal size={16} /> Terminal Mode</a>
       </div>
     </div>

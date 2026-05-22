@@ -101,7 +101,7 @@
           View Projects
           <ArrowDownRight class="transition group-hover:translate-x-0.5 group-hover:translate-y-0.5" size={18} />
         </a>
-        <a class="button-secondary" href="/assets/resume.pdf" download="Duffy-Adams-Resume.pdf">
+        <a class="button-secondary" href="/assets/Resume_5_22_26.pdf" download="Duffy-Adams-Resume.pdf">
           <FileDown size={18} />
           Download Resume
         </a>
@@ -109,9 +109,9 @@
 
       <div class="mt-7 flex flex-wrap gap-2">
         <!-- Replace profile/contact links here. -->
-        <a class="button-secondary !px-4 !py-2.5" href="https://github.com/" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a>
-        <a class="button-secondary !px-4 !py-2.5" href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
-        <a class="button-secondary !px-4 !py-2.5" href="mailto:duffyadams@example.com"><Mail size={17} /> Email</a>
+        <a class="button-secondary !px-4 !py-2.5" href="https://github.com/DuffyAdams" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a>
+        <a class="button-secondary !px-4 !py-2.5" href="https://www.linkedin.com/in/duffyadams/" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
+        <a class="button-secondary !px-4 !py-2.5" href="mailto:duffyadams55@gmail.com"><Mail size={17} /> Email</a>
         <a class="button-secondary !px-4 !py-2.5" href="/terminal/index.html"><Terminal size={17} /> Terminal Mode</a>
       </div>
     </div>
@@ -130,14 +130,14 @@
           class="surface iphone-shell relative w-full max-w-[17rem] rounded-[3rem] bg-slate-100 p-2 shadow-hover transition-transform duration-200 ease-out [transform-style:preserve-3d] dark:bg-slate-950 sm:max-w-[18.75rem]"
           style={`transform: ${phoneTransform};`}
         >
-          <div class="iphone-screen relative overflow-hidden rounded-[2.75rem] border border-slate-300/70 bg-slate-50 p-2 dark:border-white/10 dark:bg-black">
+          <div class="iphone-screen relative overflow-hidden rounded-[2.6rem] border border-slate-300/60 bg-slate-50 p-1.5 dark:border-white/10 dark:bg-black">
             <div class="absolute left-1/2 top-3.5 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black shadow-sm">
               <div class="absolute left-1/2 top-1/2 h-1.5 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-800"></div>
               <div class="absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-slate-700"></div>
             </div>
             {#key activePhonePreview.src}
               <video
-                class="aspect-[9/19.5] w-full rounded-[2.3rem] object-cover object-[50%_8%]"
+                class="aspect-[9/19.5] w-full rounded-[2.2rem] object-cover object-[50%_8%]"
                 src={activePhonePreview.src}
                 autoplay
                 loop
@@ -185,7 +185,7 @@
                 <ChevronRight size={18} />
               </button>
             </div>
-            <div class="pointer-events-none absolute inset-2 rounded-[2.3rem] ring-1 ring-inset ring-white/15"></div>
+            <div class="pointer-events-none absolute inset-1.5 rounded-[2.2rem] ring-1 ring-inset ring-white/15"></div>
             <div class="pointer-events-none absolute bottom-5 left-1/2 h-1 w-24 -translate-x-1/2 rounded-full bg-white/70"></div>
           </div>
           <div class="absolute -right-1 top-24 h-16 w-1.5 rounded-r-full bg-slate-300 dark:bg-slate-800"></div>
